@@ -1,4 +1,4 @@
-﻿package com.channelmargin.controller;
+package com.channelmargin.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.channelmargin.dto.Result;

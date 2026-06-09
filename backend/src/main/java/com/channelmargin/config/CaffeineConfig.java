@@ -1,4 +1,4 @@
-﻿package com.channelmargin.config;
+package com.channelmargin.config;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.cache.CacheManager;

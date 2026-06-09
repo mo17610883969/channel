@@ -1,4 +1,4 @@
-﻿package com.channelmargin.config;
+package com.channelmargin.config;
 
 import com.channelmargin.dto.Result;
 import org.springframework.web.bind.annotation.ExceptionHandler;

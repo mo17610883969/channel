@@ -1,4 +1,4 @@
-﻿package com.channelmargin.dto;
+package com.channelmargin.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

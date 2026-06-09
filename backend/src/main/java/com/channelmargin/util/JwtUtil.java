@@ -1,4 +1,4 @@
-﻿package com.channelmargin.util;
+package com.channelmargin.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

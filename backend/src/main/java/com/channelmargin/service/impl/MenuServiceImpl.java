@@ -1,4 +1,4 @@
-﻿package com.channelmargin.service.impl;
+package com.channelmargin.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.channelmargin.entity.Menu;

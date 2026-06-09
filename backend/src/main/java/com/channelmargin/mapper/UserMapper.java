@@ -1,4 +1,4 @@
-﻿package com.channelmargin.mapper;
+package com.channelmargin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.channelmargin.entity.User;

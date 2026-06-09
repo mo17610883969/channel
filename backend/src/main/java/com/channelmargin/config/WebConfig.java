@@ -1,4 +1,4 @@
-﻿package com.channelmargin.config;
+package com.channelmargin.config;
 
 import com.channelmargin.interceptor.JwtInterceptor;
 import lombok.RequiredArgsConstructor;
