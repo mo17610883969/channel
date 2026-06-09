@@ -1,6 +1,6 @@
-# 渠道管理系统 (Channel Management System)
+# 渠道保证金管理系统 (Channel Margin Management System)
 
-基于 Spring Boot + Vue 3 的渠道管理系统，支持用户管理、菜单管理和基于 RBAC 的权限控制。
+基于 Spring Boot + Vue 3 的渠道保证金管理系统，支持用户管理、菜单管理和基于 RBAC 的权限控制。
 
 ## 技术栈
 
@@ -28,10 +28,10 @@
 ## 项目结构
 
 ```
-channel/
-├── channel-server/               # 后端 Spring Boot 项目
+channel-margin/
+├── backend/                    # 后端 Spring Boot 项目
 │   └── src/main/
-│       ├── java/com/channel/
+│       ├── java/com/channelmargin/
 │       │   ├── config/           # 配置类（CORS、MyBatis-Plus、缓存）
 │       │   ├── controller/       # 控制器（Auth、User、Menu）
 │       │   ├── dto/              # 数据传输对象
@@ -44,7 +44,7 @@ channel/
 │           ├── db/               # 数据库初始化脚本
 │           ├── mapper/           # MyBatis XML 映射文件
 │           └── application.yml   # 应用配置
-├── channel-web/                  # 前端 Vue 3 项目
+├── frontend/                   # 前端 Vue 3 项目
 │   └── src/
 │       ├── api/                  # API 请求封装
 │       ├── router/               # 路由配置
@@ -70,19 +70,19 @@ channel/
 ### 1. 启动后端
 
 ```bash
-cd channel-server
+cd backend
 mvn spring-boot:run
 ```
 
 后端启动后运行在 `http://localhost:8080`。
 
 - H2 控制台：`http://localhost:8080/h2-console`
-- JDBC URL：`jdbc:h2:mem:channel`，用户名 `sa`，密码留空
+- JDBC URL：`jdbc:h2:mem:channelmargin`，用户名 `sa`，密码留空
 
 ### 2. 启动前端
 
 ```bash
-cd channel-web
+cd frontend
 npm install
 npm run dev
 ```
@@ -161,10 +161,10 @@ server:
 
 spring:
   datasource:
-    url: jdbc:h2:mem:channel;MODE=MySQL;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:channelmargin;MODE=MySQL;DB_CLOSE_DELAY=-1
 
 jwt:
-  secret: channel-jwt-secret-key-2026-channel-management-system
+  secret: channelmargin-jwt-secret-key-2026-channel-margin-management-system
   expiration: 7200000  # 2小时
 ```
 
@@ -187,5 +187,5 @@ server: {
 项目使用 H2 内存数据库，启动时自动执行 `schema.sql` 和 `data.sql` 初始化表结构和测试数据。如需持久化，将 JDBC URL 改为文件模式：
 
 ```
-jdbc:h2:file:./data/channel;MODE=MySQL
+jdbc:h2:file:./data/channelmargin;MODE=MySQL
 ```
