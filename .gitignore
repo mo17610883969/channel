@@ -36,6 +36,9 @@ Thumbs.db
 .env.local
 .env.*.local
 
+# H2 Database
+data/
+
 # Misc
 *.swp
 *.swo
