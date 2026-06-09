@@ -12,8 +12,8 @@ INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, icon
 (1, 0, '系统管理', 'CATALOG', '/system', 'Layout', 'Setting', 1, NULL, 1),
 (2, 1, '用户管理', 'MENU', '/system/user', 'system/user/index', 'User', 1, 'sys:user:list', 1),
 (3, 1, '菜单管理', 'MENU', '/system/menu', 'system/menu/index', 'Menu', 2, 'sys:menu:list', 1),
-(4, 0, '渠道管理', 'CATALOG', '/channel', 'Layout', 'Connection', 2, NULL, 1),
-(5, 4, '渠道列表', 'MENU', '/channel/list', 'channel/list/index', 'List', 1, 'channel:list', 1);
+(4, 0, '渠道保证金管理', 'CATALOG', '/channel-margin', 'Layout', 'Connection', 2, NULL, 1),
+(5, 4, '保证金管理', 'MENU', '/channel-margin/list', 'channel-margin/list/index', 'List', 1, 'channel-margin:list', 1);
 
 INSERT INTO sys_user_role (user_id, role_id) VALUES
 (1, 1),

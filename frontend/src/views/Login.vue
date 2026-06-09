@@ -1,8 +1,8 @@
 <template>
   <div class="login-container">
     <div class="login-box">
-      <h2 class="login-title">渠道管理系统</h2>
-      <p class="login-subtitle">Channel Management System</p>
+      <h2 class="login-title">渠道保证金管理系统</h2>
+      <p class="login-subtitle">Channel Margin Management System</p>
       <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" size="large">
         <el-form-item prop="username">
           <el-input v-model="loginForm.username" placeholder="请输入用户名" :prefix-icon="User">

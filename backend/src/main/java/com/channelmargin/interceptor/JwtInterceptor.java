@@ -1,4 +1,4 @@
-﻿package com.channelmargin.interceptor;
+package com.channelmargin.interceptor;
 
 import com.channelmargin.util.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,7 +29,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 
         String token = request.getHeader("Authorization");
         if (token == null || token.isEmpty()) {
-            sendError(response, 401, "鏈櫥褰曪紝璇峰厛鐧诲綍");
+            sendError(response, 401, "未登录，请先登录");
             return false;
         }
 
@@ -38,7 +38,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
 
         if (!jwtUtil.validateToken(token)) {
-            sendError(response, 401, "token鏃犳晥鎴栧凡杩囨湡");
+            sendError(response, 401, "Token无效或已过期");
             return false;
         }
 

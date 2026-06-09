@@ -32,13 +32,13 @@ RUN mkdir /var/run/sshd \
 # ============================================================
 WORKDIR /app
 
-# 将项目根目录下所有文件（channel-server/、channel-web/、.gitignore 等）复制到 /app
+# 将项目根目录下所有文件（backend/、frontend/、.gitignore 等）复制到 /app
 COPY . /app/
 
 # ============================================================
 # 构建前端（Vue 3 + Vite）
 # ============================================================
-WORKDIR /app/channel-web
+WORKDIR /app/frontend
 # 安装 npm 依赖（使用国内镜像加速）
 RUN npm install --registry=https://registry.npmmirror.com
 # 执行 Vite 构建，产物输出到 dist/ 目录
@@ -47,21 +47,21 @@ RUN npm run build
 # ============================================================
 # 将前端构建产物合并到后端静态资源目录，然后清理 node_modules 和 dist
 # ============================================================
-RUN mkdir -p /app/channel-server/src/main/resources/static
-RUN cp -r /app/channel-web/dist/* /app/channel-server/src/main/resources/static/
-RUN rm -rf /app/channel-web/node_modules /app/channel-web/dist
+RUN mkdir -p /app/backend/src/main/resources/static
+RUN cp -r /app/frontend/dist/* /app/backend/src/main/resources/static/
+RUN rm -rf /app/frontend/node_modules /app/frontend/dist
 
 # ============================================================
 # 构建后端（Spring Boot + Maven）
 # ============================================================
-WORKDIR /app/channel-server
+WORKDIR /app/backend
 # Maven 打包，跳过单元测试以加快构建速度
 RUN mvn clean package -DskipTests
 
 # 将生成的 fat jar 移动到 /opt/run（非 /app 目录，保持源码目录干净）
 RUN mkdir -p /opt/run && cp target/*.jar /opt/run/app.jar
 # 清理 Maven 构建产物和前端的静态资源（已打包进 jar 中，不再需要）
-RUN rm -rf target /app/channel-server/src/main/resources/static
+RUN rm -rf target /app/backend/src/main/resources/static
 
 # ============================================================
 # 创建容器启动脚本（后台启动后端 + 前台运行 SSH）

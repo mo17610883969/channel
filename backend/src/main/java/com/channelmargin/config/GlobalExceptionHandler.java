@@ -14,6 +14,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public Result<Void> handleException(Exception e) {
-        return Result.error(500, "鏈嶅姟鍣ㄥ唴閮ㄩ敊璇細" + e.getMessage());
+        return Result.error(500, "服务器内部错误：" + e.getMessage());
     }
 }

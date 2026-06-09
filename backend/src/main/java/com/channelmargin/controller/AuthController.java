@@ -28,7 +28,7 @@ public class AuthController {
     public Result<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
         try {
             LoginResponse response = userService.login(request);
-            return Result.success("鐧诲綍鎴愬姛", response);
+            return Result.success("登录成功", response);
         } catch (RuntimeException e) {
             return Result.error(400, e.getMessage());
         }
@@ -39,7 +39,7 @@ public class AuthController {
         Long userId = (Long) request.getAttribute("userId");
         User user = userService.getById(userId);
         if (user == null) {
-            return Result.error(404, "鐢ㄦ埛涓嶅瓨鍦?);
+            return Result.error(404, "用户不存在");
         }
         List<String> roles = userMapper.selectUserRoles(userId);
 
@@ -62,6 +62,6 @@ public class AuthController {
 
     @PostMapping("/logout")
     public Result<Void> logout() {
-        return Result.success("閫€鍑烘垚鍔?, null);
+        return Result.success("退出成功", null);
     }
 }

@@ -1,4 +1,4 @@
-﻿package com.channelmargin.controller;
+package com.channelmargin.controller;
 
 import com.channelmargin.dto.Result;
 import com.channelmargin.entity.Menu;
@@ -53,7 +53,7 @@ public class MenuController {
     public Result<Void> delete(@PathVariable Long id) {
         long count = menuService.lambdaQuery().eq(Menu::getParentId, id).count();
         if (count > 0) {
-            return Result.error("瀛樺湪瀛愯彍鍗曪紝鏃犳硶鍒犻櫎");
+            return Result.error("存在子菜单，无法删除");
         }
         menuService.removeById(id);
         return Result.success();

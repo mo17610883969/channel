@@ -1,4 +1,4 @@
-﻿package com.channelmargin.dto;
+package com.channelmargin.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 public class LoginRequest {
 
-    @NotBlank(message = "鐢ㄦ埛鍚嶄笉鑳戒负绌?)
+    @NotBlank(message = "用户名不能为空")
     private String username;
 
-    @NotBlank(message = "瀵嗙爜涓嶈兘涓虹┖")
+    @NotBlank(message = "密码不能为空")
     private String password;
 }

@@ -32,15 +32,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public LoginResponse login(LoginRequest request) {
         User user = getByUsername(request.getUsername());
         if (user == null) {
-            throw new RuntimeException("鐢ㄦ埛鍚嶆垨瀵嗙爜閿欒");
+            throw new RuntimeException("用户名或密码错误");
         }
         if (user.getStatus() == 0) {
-            throw new RuntimeException("鐢ㄦ埛宸茶绂佺敤");
+            throw new RuntimeException("用户已被禁用");
         }
 
         String encryptedPassword = DigestUtils.md5DigestAsHex(request.getPassword().getBytes(StandardCharsets.UTF_8));
         if (!encryptedPassword.equals(user.getPassword())) {
-            throw new RuntimeException("鐢ㄦ埛鍚嶆垨瀵嗙爜閿欒");
+            throw new RuntimeException("用户名或密码错误");
         }
 
         String token = jwtUtil.generateToken(user.getId(), user.getUsername());
