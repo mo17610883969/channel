@@ -34,7 +34,13 @@ const routes = [
         path: 'margin/list',
         name: 'MarginAccountList',
         component: () => import('@/views/marginAccount/index.vue'),
-        meta: { title: '保证金管理' }
+        meta: { title: '保证金账户列表' }
+      },
+      {
+        path: 'margin/margin-use',
+        name: 'MarginUse',
+        component: () => import('@/views/margin/marginUse/index.vue'),
+        meta: { title: '账户使用' }
       }
     ]
   }

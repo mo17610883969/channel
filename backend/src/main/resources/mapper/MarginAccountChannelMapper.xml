@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.channelmargin.mapper.MarginAccountChannelMapper">
+
+    <select id="selectByCode" resultType="java.util.Map">
+        SELECT mac.*, ma.master_channel_name, ma.account_name
+        FROM margin_account_channel mac
+        LEFT JOIN margin_account ma ON mac.margin_account_id = ma.id
+        WHERE mac.code = #{code}
+        AND mac.deleted = 0
+        AND ma.deleted = 0
+    </select>
+
+    <select id="selectAccountIdsByName" resultType="java.lang.Long">
+        SELECT DISTINCT margin_account_id
+        FROM margin_account_channel
+        WHERE name LIKE CONCAT('%', #{name}, '%')
+        AND deleted = 0
+    </select>
+
+</mapper>

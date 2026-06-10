@@ -12,10 +12,11 @@ INSERT INTO sys_menu (id, parent_id, menu_name, menu_type, path, component, icon
 (1, 0, '系统管理', 'CATALOG', '/system', 'Layout', 'Setting', 1, NULL, 1),
 (2, 1, '用户管理', 'MENU', '/system/user', 'system/user/index', 'User', 1, 'sys:user:list', 1),
 (3, 1, '菜单管理', 'MENU', '/system/menu', 'system/menu/index', 'Menu', 2, 'sys:menu:list', 1),
-(4, 0, '渠道信息管理', 'CATALOG', '/channel', 'Layout', 'Connection', 2, NULL, 1),
-(5, 4, '渠道信息列表', 'MENU', '/channel/list', 'channel/channelList', 'List', 1, 'channel:list', 1),
-(6, 0, '保证金管理', 'CATALOG', '/margin', 'Layout', 'Wallet', 3, NULL, 1),
-(7, 6, '保证金账户列表', 'MENU', '/margin/list', 'marginAccount/index', 'Money', 1, 'margin:list', 1);
+(10, 0, '渠道信息管理', 'CATALOG', '/channel', 'Layout', 'Connection', 2, NULL, 1),
+(11, 10, '渠道信息列表', 'MENU', '/channel/list', 'channel/channelList', 'List', 1, 'channel:list', 1),
+(20, 0, '保证金管理', 'CATALOG', '/margin', 'Layout', 'Wallet', 3, NULL, 1),
+(21, 20, '保证金账户列表', 'MENU', '/margin/list', 'marginAccount/index', 'Money', 1, 'margin:list', 1),
+(22, 20, '账户使用', 'MENU', '/margin/margin-use', 'margin/marginUse/index', 'List', 2, 'margin:use', 1);
 
 -- 添加渠道示例数据
 INSERT INTO channel_org (code, name, full_name, type, category, able, recycle, area, city_area, phone, idcard, open_bank, account, bank_account, channel_attribute, capital_allocation, create_time, owner, owner_name, operater, operater_name) VALUES
@@ -38,4 +39,4 @@ INSERT INTO sys_user_role (user_id, role_id) VALUES
 (3, 2);
 
 INSERT INTO sys_user_menu (user_id, menu_id) VALUES
-(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7);
+(1, 1), (1, 2), (1, 3), (1, 10), (1, 11), (1, 20), (1, 21), (1, 22);

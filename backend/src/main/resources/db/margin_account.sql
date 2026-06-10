@@ -1,71 +1,105 @@
--- 渠道保证金账户表
-DROP TABLE IF EXISTS margin_account_change;
-DROP TABLE IF EXISTS margin_account_operation_record;
-DROP TABLE IF EXISTS margin_account_channel;
-DROP TABLE IF EXISTS margin_account;
-
-CREATE TABLE margin_account (
+-- 保证金账户表
+CREATE TABLE IF NOT EXISTS margin_account (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    master_channel_id VARCHAR(50) NOT NULL COMMENT '渠道主键ID',
-    master_channel_name VARCHAR(100) NOT NULL COMMENT '渠道名称',
-    account_name VARCHAR(100) COMMENT '开户名称',
-    bank_account VARCHAR(50) COMMENT '银行账号',
-    margin_first_balance DECIMAL(20,4) DEFAULT 0 COMMENT '保证金首缴金额(元)',
-    recharge_balance DECIMAL(20,4) DEFAULT 0 COMMENT '充值保证金金额(元)',
-    margin_remain_balance DECIMAL(20,4) DEFAULT 0 COMMENT '保证金留底金额(元)',
-    margin_transit_use_balance DECIMAL(20,4) DEFAULT 0 COMMENT '在途使用保证金(元)',
-    margin_refunded_balance DECIMAL(20,4) DEFAULT 0 COMMENT '已退保证金(元)',
-    margin_frozen_balance DECIMAL(20,4) DEFAULT 0 COMMENT '冻结保证金(元)',
-    margin_pending_refund_balance DECIMAL(20,4) DEFAULT 0 COMMENT '待退款保证金(元)',
-    status VARCHAR(10) DEFAULT '0' COMMENT '状态: 0-审核中 1-已审核 3-关闭处理中 4-已关闭',
-    remark VARCHAR(500) COMMENT '备注',
-    creater_id VARCHAR(50) COMMENT '创建人ID',
+    master_channel_id VARCHAR(50),
+    master_channel_name VARCHAR(100),
+    account_name VARCHAR(100),
+    bank_account VARCHAR(50),
+    margin_first_balance DECIMAL(15,2) DEFAULT 0,
+    recharge_balance DECIMAL(15,2) DEFAULT 0,
+    margin_remain_balance DECIMAL(15,2) DEFAULT 0,
+    margin_transit_use_balance DECIMAL(15,2) DEFAULT 0,
+    margin_refunded_balance DECIMAL(15,2) DEFAULT 0,
+    status VARCHAR(10) DEFAULT '1',
+    remark VARCHAR(500),
+    creater_id VARCHAR(50),
+    creater VARCHAR(50),
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    deleted INT DEFAULT 0
+    editor VARCHAR(50),
+    edit_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted TINYINT DEFAULT 0
 );
 
--- 渠道保证金账户关联渠道表
-CREATE TABLE margin_account_channel (
+-- 保证金账户渠道关联表
+CREATE TABLE IF NOT EXISTS margin_account_channel (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    margin_account_id BIGINT NOT NULL COMMENT '保证金账户ID',
-    channel_id BIGINT NOT NULL COMMENT '渠道ID',
-    code VARCHAR(50) COMMENT '渠道编码',
-    name VARCHAR(100) COMMENT '渠道名称',
-    city_area VARCHAR(100) COMMENT '城市区域',
+    margin_account_id BIGINT,
+    channel_id BIGINT,
+    code VARCHAR(50),
+    name VARCHAR(100),
+    city_area VARCHAR(100),
+    margin_first_balance DECIMAL(15,2) DEFAULT 0,
+    recharge_balance DECIMAL(15,2) DEFAULT 0,
+    margin_transit_use_balance DECIMAL(15,2) DEFAULT 0,
+    margin_refunded_balance DECIMAL(15,2) DEFAULT 0,
+    status VARCHAR(10) DEFAULT '1',
+    remark VARCHAR(500),
+    creater_id VARCHAR(50),
+    creater VARCHAR(50),
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    deleted INT DEFAULT 0
+    editor VARCHAR(50),
+    edit_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted TINYINT DEFAULT 0
 );
 
--- 渠道保证金变动记录表
-CREATE TABLE margin_account_change (
+-- 保证金账户变更记录表
+CREATE TABLE IF NOT EXISTS margin_account_change (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    margin_account_id BIGINT NOT NULL COMMENT '保证金账户ID',
-    change_type VARCHAR(20) NOT NULL COMMENT '变动类型: RECHARGE-充值 REFUND-退款 CLOSE-关闭',
-    margin_amount DECIMAL(20,4) NOT NULL COMMENT '变动金额(元)',
-    balance_before DECIMAL(20,4) DEFAULT 0 COMMENT '变动前余额(元)',
-    balance_after DECIMAL(20,4) DEFAULT 0 COMMENT '变动后余额(元)',
-    remark VARCHAR(500) COMMENT '备注',
-    image_urls TEXT COMMENT '凭证图片URLs(JSON数组)',
-    status VARCHAR(10) DEFAULT '0' COMMENT '状态: 0-待审核 1-已审核 2-已拒绝',
-    approve_remark VARCHAR(500) COMMENT '审核备注',
-    approver_id VARCHAR(50) COMMENT '审核人ID',
-    approve_time TIMESTAMP COMMENT '审核时间',
-    creater_id VARCHAR(50) COMMENT '创建人ID',
+    margin_account_id BIGINT,
+    change_type VARCHAR(20),
+    change_amount DECIMAL(15,2),
+    before_balance DECIMAL(15,2),
+    after_balance DECIMAL(15,2),
+    business_id BIGINT,
+    business_no VARCHAR(50),
+    reason VARCHAR(500),
+    operater_id VARCHAR(50),
+    operater VARCHAR(50),
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    deleted INT DEFAULT 0
+    deleted TINYINT DEFAULT 0
 );
 
--- 渠道保证金操作记录表
-CREATE TABLE margin_account_operation_record (
+-- 保证金账户使用记录表
+CREATE TABLE IF NOT EXISTS margin_account_operation_record (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    margin_account_id BIGINT NOT NULL COMMENT '保证金账户ID',
-    operate_type VARCHAR(20) NOT NULL COMMENT '操作类型: SAVE-新增 UPDATE-修改 RECHARGE-充值 REFUND-退款 CLOSE-关闭 APPROVE-审核',
-    operate_desc VARCHAR(255) COMMENT '操作描述',
-    operate_detail TEXT COMMENT '操作详情(JSON)',
-    operater_id VARCHAR(50) COMMENT '操作人ID',
-    operater_name VARCHAR(50) COMMENT '操作人姓名',
+    type VARCHAR(20),
+    operation_record_id BIGINT,
+    margin_account_id BIGINT,
+    master_channel_name VARCHAR(100),
+    margin_account_channel_id BIGINT,
+    buss_no VARCHAR(50),
+    cust_name VARCHAR(50),
+    cust_id VARCHAR(50),
+    contract_no VARCHAR(50),
+    code VARCHAR(50),
+    name VARCHAR(100),
+    cont_amt DECIMAL(15,2),
+    allocation_ratio DECIMAL(5,4),
+    margin_use_balance DECIMAL(15,2),
+    status VARCHAR(10) DEFAULT '0',
+    creater_id VARCHAR(50),
+    creater VARCHAR(50),
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    deleted INT DEFAULT 0
+    editor VARCHAR(50),
+    edit_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    city_area VARCHAR(100),
+    order_status VARCHAR(20),
+    remark VARCHAR(500),
+    deleted TINYINT DEFAULT 0
 );
+
+-- 插入示例数据
+INSERT INTO margin_account (master_channel_name, account_name, margin_first_balance, recharge_balance, status) VALUES
+('北京渠道总部', '北京保证金账户', 500000.00, 100000.00, '1'),
+('上海渠道总部', '上海保证金账户', 300000.00, 50000.00, '1');
+
+INSERT INTO margin_account_channel (margin_account_id, code, name, city_area, margin_first_balance, recharge_balance, status) VALUES
+(1, 'BJ001', '北京分公司', '北京市', 500000.00, 100000.00, '1'),
+(1, 'BJ002', '北京朝阳支公司', '北京市朝阳区', 200000.00, 30000.00, '1'),
+(2, 'SH001', '上海分公司', '上海市', 300000.00, 50000.00, '1');
+
+-- 插入账户使用示例数据
+INSERT INTO margin_account_operation_record (type, margin_account_id, master_channel_name, buss_no, cust_name, contract_no, code, name, cont_amt, margin_use_balance, status, creater) VALUES
+('USE', 1, '北京渠道总部', 'ORD20240601001', '张三', 'HT20240601001', 'BJ001', '北京分公司', 50000.00, 5000.00, '0', 'admin'),
+('USE', 1, '北京渠道总部', 'ORD20240601002', '李四', 'HT20240601002', 'BJ001', '北京分公司', 80000.00, 8000.00, '1', 'admin'),
+('USE', 2, '上海渠道总部', 'ORD20240601003', '王五', 'HT20240601003', 'SH001', '上海分公司', 60000.00, 6000.00, '2', 'admin');

@@ -6,6 +6,9 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * 保证金账户变更记录
+ */
 @Data
 @TableName("margin_account_change")
 public class MarginAccountChange {
@@ -13,41 +16,38 @@ public class MarginAccountChange {
     @TableId(type = IdType.AUTO)
     private Long id;
 
+    /** 保证金账户ID */
     private Long marginAccountId;
 
-    /** 变动类型: RECHARGE-充值 REFUND-退款 CLOSE-关闭 */
+    /** 变更类型: USE-使用 FREEZE-冻结 UNFREEZE-解冻 REFUND-退款 RECHARGE-充值 */
     private String changeType;
 
-    /** 变动金额(元) */
-    private BigDecimal marginAmount;
+    /** 变更金额 */
+    private BigDecimal changeAmount;
 
-    /** 变动前余额(元) */
-    private BigDecimal balanceBefore;
+    /** 变更前余额 */
+    private BigDecimal beforeBalance;
 
-    /** 变动后余额(元) */
-    private BigDecimal balanceAfter;
+    /** 变更后余额 */
+    private BigDecimal afterBalance;
 
-    private String remark;
+    /** 关联业务ID */
+    private Long businessId;
 
-    /** 凭证图片URLs(JSON数组) */
-    private String imageUrls;
+    /** 关联业务单号 */
+    private String businessNo;
 
-    /** 状态: 0-待审核 1-已审核 2-已拒绝 */
-    private String status;
+    /** 变更原因 */
+    private String reason;
 
-    private String approveRemark;
+    /** 操作人ID */
+    private String operaterId;
 
-    private String approverId;
-
-    private LocalDateTime approveTime;
-
-    private String createrId;
+    /** 操作人 */
+    private String operater;
 
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
-
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
 
     @TableLogic
     private Integer deleted;
