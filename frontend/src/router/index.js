@@ -29,6 +29,12 @@ const routes = [
         name: 'ChannelList',
         component: () => import('@/views/channel/channelList.vue'),
         meta: { title: '渠道信息列表' }
+      },
+      {
+        path: 'margin/list',
+        name: 'MarginAccountList',
+        component: () => import('@/views/marginAccount/index.vue'),
+        meta: { title: '保证金管理' }
       }
     ]
   }
@@ -42,7 +48,7 @@ const router = createRouter({
 const whiteList = ['/login']
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title ? `${to.meta.title} - 渠道管理系统` : '渠道管理系统'
+  document.title = to.meta.title ? `${to.meta.title} - 渠道保证金管理系统` : '渠道保证金管理系统'
   const token = localStorage.getItem('token')
   if (token) {
     if (to.path === '/login') {

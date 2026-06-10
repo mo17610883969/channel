@@ -25,7 +25,7 @@ spring:
     init:
       mode: always
       encoding: UTF-8
-      schema-locations: classpath:db/schema.sql
+      schema-locations: classpath:db/schema.sql,classpath:db/margin_account.sql
       data-locations: classpath:db/data.sql
   web:
     resources:
