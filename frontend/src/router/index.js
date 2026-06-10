@@ -23,6 +23,12 @@ const routes = [
         name: 'MenuManage',
         component: () => import('@/views/system/menu/index.vue'),
         meta: { title: '菜单管理' }
+      },
+      {
+        path: 'channel/list',
+        name: 'ChannelList',
+        component: () => import('@/views/channel/channelList.vue'),
+        meta: { title: '渠道信息列表' }
       }
     ]
   }
